@@ -1,0 +1,24 @@
+[tool.poetry]
+name = "pl-test"
+version = "0.1.0"
+description = ""
+authors = ["Your Name <you@example.com>"]
+readme = "README.md"
+packages = [{include = "pl_test"}]
+
+[tool.poetry.dependencies]
+python = "^3.8"
+sagemaker = "^2.123.0"
+torchvision = "^0.14.1"
+lightning-fabric = "^1.9.0rc0"
+
+
+[tool.poetry.group.dev.dependencies]
+pytorch-lightning = "^1.8.3"
+ipykernel = "^6.19.4"
+black = {version = "^23.1a1", allow-prereleases = true}
+smdistributed-modelparallel = {url = "https://sagemaker-distributed-model-parallel.s3.us-west-2.amazonaws.com/pytorch-1.12.1/build-artifacts/2022-12-08-21-34/smdistributed_modelparallel-1.13.0-cp38-cp38-linux_x86_64.whl", platform = "linux"}
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

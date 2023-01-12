@@ -1,0 +1,5 @@
+sagemaker >= 2.123.0
+pytorch_lightning
+torchvision
+torchmetrics
+lightning-fabric
