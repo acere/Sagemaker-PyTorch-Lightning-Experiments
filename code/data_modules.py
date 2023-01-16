@@ -15,12 +15,12 @@ class MNISTDataModule(pl.LightningDataModule):
         parser.add_argument(
             "--train",
             type=str,
-            default=os.getenv("SM_CHANNEL_TRAINING", "/opt/ml/input/data/training"),
+            default=os.getenv("SM_CHANNEL_TRAIN", "/opt/ml/input/data/train"),
         )
         parser.add_argument(
             "--test",
             type=str,
-            default=os.getenv("SM_CHANNEL_TESTING", "/opt/ml/input/data/testing"),
+            default=os.getenv("SM_CHANNEL_TEST", "/opt/ml/input/data/test"),
         )
         parser.add_argument(
             "--batch_size",
@@ -62,7 +62,7 @@ class MNISTDataModule(pl.LightningDataModule):
         self.num_workers = num_workers
 
     def prepare_data(self):
-        # download
+        # download data if not already available
         MNIST(
             self.hparams.train,  # type: ignore
             train=True,

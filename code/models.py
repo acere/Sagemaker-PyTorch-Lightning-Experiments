@@ -32,8 +32,8 @@ class MNISTModel(pl.LightningModule):
 
     def training_step(self, batch, batch_idx):
         x, y = batch
-        probs = self(x)
-        loss = F.cross_entropy(probs, y)
+        logits = self(x)
+        loss = F.cross_entropy(logits, y)
 
         self.log("train_loss", loss, on_epoch=True, sync_dist=True)
         self.trainer.logger.log_epoch_duration(self.current_epoch)  # type: ignore
@@ -41,19 +41,19 @@ class MNISTModel(pl.LightningModule):
 
     def validation_step(self, batch, batch_idx):
         x, y = batch
-        probs = self(x)
-        loss = F.cross_entropy(probs, y)
-        self.valid_acc.update(probs, y)
+        logits = self(x)
+        loss = F.cross_entropy(logits, y)
+        self.valid_acc.update(logits, y)
 
         self.log("validation_loss", loss, prog_bar=True, sync_dist=True)
         self.log("validation_acc", self.valid_acc, sync_dist=True)
 
     def test_step(self, batch, batch_idx):
         x, y = batch
-        probs = self(x)
+        logits = self(x)
 
-        self.test_acc.update(probs, y)
-        self.confmat.update(probs, y)
+        self.test_acc.update(logits, y)
+        self.confmat.update(logits, y)
         try:
             self.trainer.logger.log_confusion_matrix(  # type: ignore
                 self.confmat.compute().tolist(),
