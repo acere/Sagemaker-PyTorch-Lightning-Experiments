@@ -22,11 +22,11 @@ class SmLogger(Logger):
         super().__init__()
         print("Calling logger init")
         self._run = _DummyRun()
+        self._time_start = time()
+        self._time_since_last_epoch = self._time_start
+        self._current_epoch = 0
         if run is not None:
-            self._time_start = time()
             self._run = run
-            self._time_since_last_epoch = self._time_start
-            self._current_epoch = 0
 
     @property
     @rank_zero_experiment
