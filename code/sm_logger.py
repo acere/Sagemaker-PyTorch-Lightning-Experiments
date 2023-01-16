@@ -5,12 +5,12 @@ Amazon SageMaker Experiments Logger
 import logging
 import os
 from contextlib import contextmanager
+from time import time
 from typing import Any, Callable, Dict, List, Mapping, Optional, Union
 
-from lightning_lite.utilities.rank_zero import rank_zero_only
 from pytorch_lightning.loggers.logger import DummyLogger, Logger, rank_zero_experiment
+from pytorch_lightning.utilities.rank_zero import rank_zero_only
 from sagemaker.experiments import Run, load_run
-from time import time
 
 log = logging.getLogger(__name__)
 
@@ -27,7 +27,6 @@ class SmLogger(Logger):
             self._run = run
             self._time_since_last_epoch = self._time_start
             self._current_epoch = 0
-            
 
     @property
     @rank_zero_experiment
